@@ -17,4 +17,5 @@ public interface GrupoService {
 
     void actualizarMiembros(Long grupoId, List<Long> usuarioIds);
     List<Grupo> listarGruposDelTrabajador(Usuario  usuario);
+    void delete(Long id);
 }
