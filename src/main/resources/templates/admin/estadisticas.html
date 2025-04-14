@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas de Tareas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color: #F3F4F6;">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #1E3A8A;">Estadísticas de Tareas</h2>
+
+    <div class="mb-5">
+        <h4>Último día</h4>
+        <canvas id="chartDia"></canvas>
+    </div>
+
+    <div class="mb-5">
+        <h4>Últimos 10 días</h4>
+        <canvas id="chart10Dias"></canvas>
+    </div>
+
+    <div class="mb-5">
+        <h4>Últimos 15 días</h4>
+        <canvas id="chart15Dias"></canvas>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const chartDia = new Chart(document.getElementById('chartDia'), {
+      type: 'doughnut',
+      data: [[${estadisticasDia}]],
+    });
+
+    const chart10 = new Chart(document.getElementById('chart10Dias'), {
+      type: 'bar',
+      data: [[${estadisticas10Dias}]],
+    });
+
+    const chart15 = new Chart(document.getElementById('chart15Dias'), {
+      type: 'bar',
+      data: [[${estadisticas15Dias}]],
+    });
+</script>
+</body>
+</html>

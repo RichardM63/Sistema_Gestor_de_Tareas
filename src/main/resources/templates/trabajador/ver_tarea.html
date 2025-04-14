@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ver Tarea</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+  <h2 class="mb-4">Detalles de la Tarea</h2>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" th:text="${tarea.nombre}">Nombre de la Tarea</h5>
+      <p><strong>Descripción:</strong> <span th:text="${tarea.descripcion}">Descripción</span></p>
+      <p><strong>Fecha de Creación:</strong> <span th:text="${#temporals.format(tarea.fechaInicio, 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
+      <p><strong>Estado:</strong> <span th:text="${tarea.estado}">Estado</span></p>
+      <p><strong>Fecha de Vencimiento:</strong> <span th:text="${#temporals.format(tarea.fechaVencimiento, 'dd/MM/yyyy')}">Fecha Vencimiento</span></p>
+    </div>
+  </div>
+
+  <!-- SI NO HA RESPONDIDO -->
+  <div class="mt-5" th:if="${respuesta == null}">
+    <h4>Responder Tarea</h4>
+    <form th:action="@{/trabajador/tareas/responder/{id}(id=${tarea.id})}" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" class="form-control" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="archivo">Archivo (opcional)</label>
+        <input type="file" id="archivo" name="archivo" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Enviar Respuesta</button>
+    </form>
+  </div>
+
+  <!-- SI YA RESPONDIÓ -->
+  <div class="mt-5" th:if="${respuesta != null}">
+    <h4>Tu Respuesta</h4>
+    <div class="card p-3">
+      <p><strong>Descripción:</strong></p>
+      <p th:text="${respuesta.descripcion}">Descripción de la respuesta</p>
+      <p><strong>Fecha de Envío:</strong> <span th:text="${#temporals.format(respuesta.fechaRespuesta, 'dd/MM/yyyy HH:mm')}"></span></p>
+
+      <div th:if="${respuesta.archivo != null}">
+        <p><strong>Archivo:</strong>
+          <a th:href="@{'/uploads/' + ${respuesta.archivo}}" target="_blank" th:text="${respuesta.archivo}">Descargar</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <a href="/trabajador/tareas" class="btn btn-secondary mt-4">Volver al Dashboard</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Grupo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Grupo: <span th:text="${grupo.nombre}"></span></h2>
+    <form th:action="@{'/admin/grupos/editar/' + ${grupo.id}}" method="post">
+        <div class="mb-3">
+            <label for="miembros">Miembros del grupo:</label>
+            <div class="form-check" th:each="trabajador : ${trabajadores}">
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="miembros"
+                       th:value="${trabajador.id}"
+                       th:checked="${grupo.miembros.contains(trabajador)}">
+                <label class="form-check-label" th:text="${trabajador.username}"></label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a th:href="@{/admin/grupos}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+<script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+</body>
+</html>
