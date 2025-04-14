@@ -65,6 +65,9 @@ public class GrupoServiceImpl implements GrupoService {
          return grupoRepository.findByMiembrosContaining(usuario);
     }
 
-
+    @Override
+    public void delete(Long id) {
+        grupoRepository.deleteById(id);
+    }
 }
 
