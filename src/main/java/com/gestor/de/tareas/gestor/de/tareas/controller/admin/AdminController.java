@@ -28,6 +28,7 @@ public class AdminController {
     private final UsuarioServiceImpl usuarioService;
     private final TareaServiceImpl tareaService;
     private final GrupoServiceImpl grupoService;
+    private final ObjectMapper objectMapper;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -174,14 +175,19 @@ public class AdminController {
         return "redirect:/admin/grupos";
     }
 
-    @GetMapping("/estadisticas")
-    public String verEstadisticas(Model model) {
-        model.addAttribute("estadisticasDia", tareaService.generarDatosPorDias(1));
-        model.addAttribute("estadisticas10Dias", tareaService.generarDatosPorDias(10));
-        model.addAttribute("estadisticas15Dias", tareaService.generarDatosPorDias(15));
-        return "admin/estadisticas";
+   @GetMapping("/grupos/eliminar/{id}")
+    public String eliminar(@PathVariable Long id){
+        grupoService.delete(id);
+        return "redirect:/admin/grupos";
     }
 
 
+    @GetMapping("/estadisticas")
+    public String verEstadisticas(Model model) throws JsonProcessingException, JsonProcessingException {
+        model.addAttribute("estadisticasDia", objectMapper.writeValueAsString(tareaService.generarDatosPorDias(1)));
+        model.addAttribute("estadisticas10Dias", objectMapper.writeValueAsString(tareaService.generarDatosPorDias(10)));
+        model.addAttribute("estadisticas15Dias", objectMapper.writeValueAsString(tareaService.generarDatosPorDias(15)));
+        return "admin/estadisticas";
+    }
 
 }
