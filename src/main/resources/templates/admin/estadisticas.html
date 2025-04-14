@@ -28,28 +28,27 @@
     </div>
 </div>
 
-<!-- El inline JS para Thymeleaf debe estar así -->
 <script th:inline="javascript">
-    /*<![CDATA[*/
-    const dataDia = /*[[${estadisticasDia}]]*/ {};
-    const data10Dias = /*[[${estadisticas10Dias}]]*/ {};
-    const data15Dias = /*[[${estadisticas15Dias}]]*/ {};
+    const estadisticasDia = [[${estadisticasDia}]];
+    const estadisticas10Dias = [[${estadisticas10Dias}]];
+    const estadisticas15Dias = [[${estadisticas15Dias}]];
 
     new Chart(document.getElementById('chartDia'), {
         type: 'doughnut',
-        data: dataDia,
+        data: estadisticasDia
     });
 
     new Chart(document.getElementById('chart10Dias'), {
         type: 'bar',
-        data: data10Dias,
+        data: estadisticas10Dias
     });
 
     new Chart(document.getElementById('chart15Dias'), {
         type: 'bar',
-        data: data15Dias,
+        data: estadisticas15Dias
     });
-    /*]]>*/
 </script>
+
 </body>
 </html>
+
